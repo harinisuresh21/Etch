@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Knowledge Relay - Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&amp;family=Public+Sans:wght@400;500;600&amp;family=Space_Grotesk:wght@500;700&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#95d3ba",
+                        "on-background": "#1b1c1a",
+                        "inverse-on-surface": "#f2f0ed",
+                        "outline": "#707974",
+                        "tertiary-fixed-dim": "#ffb68e",
+                        "inverse-surface": "#30312e",
+                        "surface": "#fbf9f5",
+                        "outline-variant": "#bfc9c3",
+                        "on-surface": "#1b1c1a",
+                        "secondary-fixed": "#dee2f3",
+                        "inverse-primary": "#95d3ba",
+                        "secondary-fixed-dim": "#c2c6d6",
+                        "secondary-container": "#dee2f3",
+                        "on-tertiary-fixed-variant": "#763300",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#eae8e4",
+                        "tertiary": "#502000",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f5f3ef",
+                        "on-secondary-fixed": "#161b27",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#2b6954",
+                        "on-primary-fixed": "#002117",
+                        "surface-container": "#efeeea",
+                        "primary-container": "#064e3b",
+                        "primary": "#003527",
+                        "on-secondary-container": "#5f6472",
+                        "tertiary-container": "#733100",
+                        "primary-fixed": "#b0f0d6",
+                        "on-primary-fixed-variant": "#0b513d",
+                        "surface-variant": "#e4e2de",
+                        "surface-container-highest": "#e4e2de",
+                        "on-error-container": "#93000a",
+                        "background": "#fbf9f5",
+                        "on-surface-variant": "#404944",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#ffdbca",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#424754",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#80bea6",
+                        "secondary": "#595e6c",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#331200",
+                        "surface-dim": "#dbdad6",
+                        "surface-bright": "#fbf9f5",
+                        "on-tertiary-container": "#ff985a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Newsreader"],
+                        "body": ["Public Sans"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .parchment-grain {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .journal-cover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03), inset 0 0 20px rgba(0,0,0,0.02);
+        }
+        .journal-spine {
+            background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0) 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen relative">
+<div class="parchment-grain fixed inset-0 z-50"></div>
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-6 bg-surface-container-low border-r-0 w-64 z-40">
+<div class="px-6 mb-12">
+<h1 class="font-headline font-bold text-primary text-2xl">Knowledge Relay</h1>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 py-3 text-slate-600 dark:text-slate-400 hover:bg-surface-dim rounded-lg mx-2 px-4 transition-all font-label uppercase tracking-widest text-xs" href="#">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+<span>INBOX</span>
+</a>
+<a class="flex items-center gap-3 py-3 bg-primary-container text-white rounded-lg mx-2 px-4 transition-all font-label uppercase tracking-widest text-xs" href="#">
+<span class="material-symbols-outlined" data-icon="book_2">book_2</span>
+<span>LIBRARY</span>
+</a>
+<a class="flex items-center gap-3 py-3 text-slate-600 dark:text-slate-400 hover:bg-surface-dim rounded-lg mx-2 px-4 transition-all font-label uppercase tracking-widest text-xs" href="#">
+<span class="material-symbols-outlined" data-icon="science">science</span>
+<span>THE_LAB</span>
+</a>
+<a class="flex items-center gap-3 py-3 text-slate-600 dark:text-slate-400 hover:bg-surface-dim rounded-lg mx-2 px-4 transition-all font-label uppercase tracking-widest text-xs" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>SETTINGS</span>
+</a>
+</nav>
+<div class="mt-auto px-4 border-t border-outline-variant/20 pt-6">
+<div class="flex items-center gap-3 mb-6 px-2">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
+<img alt="The Curator" class="rounded-full" data-alt="Close-up portrait of a refined older scholar in a tweed jacket with silver hair and spectacles in a warm library" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgOPHMX0lk1XvsA7UIj6163d81qgyQGRhkqyGV3CNd69imgHPGKGyt5dw0pSTLf1enLtWGsnM7I1KgBeX2mws38D-u5oNj5ls0tSD9lS4rrUDrFTaYUIw7v0CKejvtSSyNsDYy-VHhChEqo2qocMC-ohWCNb4q5jCxpnklHNKssMumevHEtAm4dbRM0-3BoYA4lpKmbsbaihU8H82MFMclw69Ph_UHh7yBNTHHsMoFhnQRD4K0v-p7c7bfy46r_nkKdIeyHudqP3o"/>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">The Curator</p>
+<p class="text-[10px] font-label uppercase tracking-tight text-on-surface-variant">Lead Archivist</p>
+</div>
+</div>
+<div class="space-y-1">
+<a class="flex items-center gap-3 py-2 text-slate-600 hover:text-primary transition-colors text-xs font-label uppercase tracking-widest px-2" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 py-2 text-slate-600 hover:text-error transition-colors text-xs font-label uppercase tracking-widest px-2" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="ml-64 min-h-screen">
+<!-- Top App Bar Content -->
+<header class="flex justify-between items-center px-8 py-6 w-full max-w-screen-2xl mx-auto sticky top-0 bg-surface/90 backdrop-blur-md z-30">
+<div class="flex items-center gap-8">
+<h2 class="font-headline italic text-2xl tracking-tight text-primary">Library Collections</h2>
+<div class="h-6 w-px bg-outline-variant/30"></div>
+<div class="flex gap-6">
+<button class="text-xs font-label uppercase tracking-widest text-primary border-b-2 border-primary font-bold">Volumes</button>
+<button class="text-xs font-label uppercase tracking-widest text-slate-500 hover:text-primary transition-colors font-medium">Drafts</button>
+<button class="text-xs font-label uppercase tracking-widest text-slate-500 hover:text-primary transition-colors font-medium">Archive</button>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant group-focus-within:text-primary transition-colors" data-icon="search">search</span>
+<input class="bg-surface-container-lowest border-0 border-b border-outline-variant/50 focus:ring-0 focus:border-primary pl-10 pr-4 py-2 text-sm w-64 transition-all rounded-t-lg" placeholder="Search the archives..." type="text"/>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-primary hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<section class="px-12 py-8 max-w-screen-2xl mx-auto">
+<!-- Journal Grid (Asymmetric) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+<!-- Journal Card 1 -->
+<div class="group cursor-pointer">
+<div class="journal-cover relative aspect-[3/4] bg-surface-container-lowest rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div class="absolute inset-y-0 left-0 w-3 journal-spine"></div>
+<div class="mb-4">
+<span class="font-label text-[10px] uppercase tracking-widest text-tertiary-container font-bold px-2 py-0.5 border border-tertiary-container/30 rounded">Volume IV</span>
+</div>
+<h3 class="font-headline font-bold text-3xl leading-tight text-on-secondary-fixed mb-4">FastAPI Mastery</h3>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed mb-8 italic">The definitive guide to high-performance asynchronous systems.</p>
+<div class="mt-auto">
+<div class="flex flex-wrap gap-2 mb-6">
+<div class="w-6 h-6 rounded bg-surface-dim p-1"><img alt="GitHub" data-alt="Minimal monochrome GitHub logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1y1u2MqwILbEmrqHxkWwCAi7Y-zf1WAmME2t3_CElf-CK-FgOpSw6jdfAGDgRPU2ZP7-KPvh68F-Ri_ok6SJuvCsLOKASnsuC6pZrCf4INSQeHoy7v9dByysjmqvmDDx3Po0EEglrfiKXYvjXlAgHDJ4x9jKerX_DoWeS7AlUC4AVsi38tEovGz1hKub08vQbt2ft4oY7gwBEiXAH_ykDOt21wbhWHH7GjXUrEtFd-40MGEd_bjTENO8TYkNH2rCSuvUhKP6Clrw"/></div>
+<div class="w-6 h-6 rounded bg-surface-dim p-1"><img alt="Stack" data-alt="Minimal monochrome Stack Overflow logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2SY9GlDXUE55TFhExyAnD0nz43xzqt-ayJtctgSQjaCeHByypVo1mLs_867oNaAipQOP7JgwAIdtU3OY2LbmNmzmwbGIoa6p0w2sRtiHiyiPOVFWOg5feG3PhL4J2MQYu9jMkGq8gep3brMBqfczM00TASQCdOZzfpjdgwlhdzXcgYIkTDncjE2Qcq21BAjAh5jpQod61NxwNWOwZGMhVVFLnxOXXZLEeQIlAKM9XiM_cZcw8KOHYfabKJvtaw3h1Duwud3YeEDE"/></div>
+<div class="w-6 h-6 rounded bg-surface-dim p-1"><img alt="Medium" data-alt="Minimal monochrome Medium logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDZkKLcnc2G41u_JHtvth_i0-KwXnOZDx7PDI-gay67nEqOCWtWm9hEgk0CvQ2z5wnumYq7_mJ2K4NdCnZYiwx6XL2UXEGlRmVhMW6h6QTqqG5llyJraHcQor9P1AWiWnN3pAjGKoFZzhzqJFzPokCgjxlme3K4kE3P0ndOEIZBTev80R21DhjqMAfnDdGL131p19C7H9ln8b-bKJK7j3Zt4oSch90oryInSQUJ4p_n0Ve9g68EHS4015qpuTg9a9-wcK6PB2d0zc"/></div>
+<div class="w-6 h-6 rounded bg-surface-dim p-1 flex items-center justify-center text-[10px] font-label font-bold text-on-surface-variant">+12</div>
+</div>
+<div class="flex justify-between items-center border-t border-outline-variant/20 pt-4">
+<span class="text-[10px] font-label uppercase tracking-tighter text-outline">148 Citations</span>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="arrow_right_alt">arrow_right_alt</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Journal Card 2 -->
+<div class="group cursor-pointer">
+<div class="journal-cover relative aspect-[3/4] bg-surface-container-low rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div class="absolute inset-y-0 left-0 w-3 journal-spine"></div>
+<div class="mb-4">
+<span class="font-label text-[10px] uppercase tracking-widest text-primary font-bold px-2 py-0.5 border border-primary/30 rounded">In Progress</span>
+</div>
+<h3 class="font-headline font-bold text-3xl leading-tight text-on-secondary-fixed mb-4">Neural Geometries</h3>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed mb-8 italic">Exploring the topological structures of latent spaces.</p>
+<div class="mt-auto">
+<div class="flex flex-wrap gap-2 mb-6">
+<div class="w-6 h-6 rounded bg-surface-dim p-1"><img alt="Arxiv" data-alt="Minimal monochrome Arxiv logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGFOOdrB0GwI6PY0vKBAQ8T04R_LWUI-QVl7vdDmGn1PqyqB0eb95vYRLswUzlYSIWh80Y_ZcUSKFu3SwdPQsFNBMbmNLUBnXSDyVN6jURhe5ubmEdAGIURMJxG5FBMG-XvdcbZQXxvWhJvYWrCHaIzuNdawVQJB3Y8aANwDo_-u_l6xGbeKF1yir_CJb1OOvtGhA39-pCTAlVnZWds4-gFnS-y3ThA2coU8ACz7PHI1PiBu3bMGBVHf-obc-s4JBsuq96W-uHweU"/></div>
+<div class="w-6 h-6 rounded bg-surface-dim p-1"><img alt="Notion" data-alt="Minimal monochrome Notion logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLq8318FXL523UcJrTlgLNAdXD1RxxJXd4H9RgmWGzCYeFRWiGrBSpSgNQm__CM8t2O3upZzu4glgKf7mXd4FZyvf1XYbBbEuS5-cvqiR0CbBbdzsTNtmkKJw-AuxKqCyaF2sNBZAOPhi4NU9qCMSLB-I63XZKb55eGO-mjPj43dtBD2UswjRBcZr_8hkIpF5T52CFf77N1vswf-kn7lykBdOqRUww4wyECIkRr3YCqGuUSP5gBw3q_qkMsmrfLWFxZmoSzVFxoN0"/></div>
+<div class="w-6 h-6 rounded bg-surface-dim p-1 flex items-center justify-center text-[10px] font-label font-bold text-on-surface-variant">+4</div>
+</div>
+<div class="flex justify-between items-center border-t border-outline-variant/20 pt-4">
+<span class="text-[10px] font-label uppercase tracking-tighter text-outline">32 Sources</span>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="pending">pending</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Journal Card 3 -->
+<div class="group cursor-pointer">
+<div class="journal-cover relative aspect-[3/4] bg-primary rounded-r-lg overflow-hidden border border-primary/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div class="absolute inset-y-0 left-0 w-3 bg-black/20"></div>
+<div class="mb-4">
+<span class="font-label text-[10px] uppercase tracking-widest text-on-primary-container font-bold px-2 py-0.5 border border-on-primary-container/30 rounded">Editor's Choice</span>
+</div>
+<h3 class="font-headline font-bold text-3xl leading-tight text-white mb-4">Rust Persistence</h3>
+<p class="text-sm text-primary-fixed-dim font-body leading-relaxed mb-8 italic">Systems programming patterns for durable data storage.</p>
+<div class="mt-auto">
+<div class="flex flex-wrap gap-2 mb-6">
+<div class="w-6 h-6 rounded bg-white/10 p-1"><img alt="Rust" data-alt="Minimal white Rust language logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9K_LHkHkv9Tk2sPq_2bRKdp7Nq4zU1ndAxeEOJxA6otMBrLoqxGWWuTj0ZRx1V_GC2H68xCk3nWMU6nMs7VGe0l33v5ULgH_LPvYUjTRZxRjQm8n3rG04U83O-xGKgLidyQ9KzFwgIpln_RboCndZZphQf5Gz39HmPsZFFoBfIGq-TGKR6Uckf8zzK6enKkBJ-mk0vZ1ojQ_bP46UV2tzoepB2JmOlwGheslNShcaGyBArK10efdrhaOvj4LBTUnyvPz4pKy72iU"/></div>
+<div class="w-6 h-6 rounded bg-white/10 p-1"><img alt="GitHub" data-alt="Minimal white GitHub logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAKj56EGyBjsFhEoVpbf1LAtBeQ_zGBvLlhdpYVhX3CUP-OAxmjjdfRdg_AM4hd57iV5mjAWU1m4V13_3qIxxoLhKGHPAWiNEZ2vmJA7_l0bak0xSlvhJWd6vT0pQqfRPZwN0dNK-RGJdTC0R4qVM97m41NOHpvqrpFsZaz5AunQvM6fWoQ4egj_APW44ErQe3Z4CSdQhkuWczLDzSzqVQNG-rtWxmORvgE8elU3B_xl3Fe98PliBs9J3h8rSioq90QXMu9lpcYPE"/></div>
+</div>
+<div class="flex justify-between items-center border-t border-white/10 pt-4">
+<span class="text-[10px] font-label uppercase tracking-tighter text-primary-fixed-dim">212 Citations</span>
+<span class="material-symbols-outlined text-tertiary-fixed text-xl" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Journal Card 4 -->
+<div class="group cursor-pointer">
+<div class="journal-cover relative aspect-[3/4] bg-surface-container-lowest rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div class="absolute inset-y-0 left-0 w-3 journal-spine"></div>
+<div class="mb-4">
+<span class="font-label text-[10px] uppercase tracking-widest text-outline font-bold px-2 py-0.5 border border-outline-variant/30 rounded">Archive</span>
+</div>
+<h3 class="font-headline font-bold text-3xl leading-tight text-on-secondary-fixed mb-4">Vanilla JS Ethos</h3>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed mb-8 italic">Maintaining state without the bloat of frameworks.</p>
+<div class="mt-auto">
+<div class="flex flex-wrap gap-2 mb-6">
+<div class="w-6 h-6 rounded bg-surface-dim p-1"><img alt="Wiki" data-alt="Minimal monochrome Wikipedia logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeH-1G8PXN3dV8XedEKU2KQvwfciSyBKtoYuRRaypl-AslLjLPvvewfwfVnQd1jwOiNYGrypG6peXxtdREyidCNic_eRInsIO_gWopZqJP40tQiUrYvIBDpLXcO53blfFeDb95r1I1OKenm1lAkEEpF5ysPT_d64oILZA_lKLGDGJBXt0iv7EdmvsmTbJVjlmXquQvXHRE8PV_7FtuojIMCmTV2XXaS3rOFI3rCqbRHh6jDjrdDkFEfLiARA_ibarIDaM-f8bhtfg"/></div>
+<div class="w-6 h-6 rounded bg-surface-dim p-1"><img alt="Dev.to" data-alt="Minimal monochrome Dev.to logo icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBot0jvlFZAFOlguFMRDH09m2vqgcJMWZQ2gsC47_bRwnMTdH07OYIurTSZb15V45QMnC2MC_qJ_1EII2xhMZq325L6LSvXSlZwrpwsLw-2bb0GG84eFwM4UJu3gFSXNZInIayfFeoIMjWdjT2VF1oapK1154MjfiJHwJs1G_O0rFVJSMMqX00sdpJzqP5a8rji0n-v8o33POrTMzAtPFRNqwUjeyhNzb9r3J0BHIBO3oVuSoOA-9MOU-VJNSkFqTuuaTeM24OEnms"/></div>
+</div>
+<div class="flex justify-between items-center border-t border-outline-variant/20 pt-4">
+<span class="text-[10px] font-label uppercase tracking-tighter text-outline">89 Sources</span>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="history">history</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Journal Card 5 -->
+<div class="group cursor-pointer">
+<div class="journal-cover relative aspect-[3/4] bg-surface-container-low rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div class="absolute inset-y-0 left-0 w-3 journal-spine"></div>
+<div class="mb-4">
+<span class="font-label text-[10px] uppercase tracking-widest text-tertiary-container font-bold px-2 py-0.5 border border-tertiary-container/30 rounded">Vol IX</span>
+</div>
+<h3 class="font-headline font-bold text-3xl leading-tight text-on-secondary-fixed mb-4">Distributed Consensus</h3>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed mb-8 italic">From Paxos to Raft: An architectural journey.</p>
+<div class="mt-auto">
+<div class="flex flex-wrap gap-2 mb-6">
+<div class="w-6 h-6 rounded bg-surface-dim p-1"><img alt="Paper" data-alt="Minimal monochrome academic paper icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBd-RfPr5qY-qAP9gSJ-6OSBiheVUS-lct59aA6TwdftSAcbIsvDHUCMJxWm1MTujLjdQA3598yK_Ugo9TeWOuNJXCP1FAk7U1-W0FyrSB6NR9puLfy7pwMYws9z2M2XL0FGIuPhi0lqM6cZby11Bgc7y5sMskHZcugLmxdSGScz3HxHHOPb9SYh3jUOf_BSVaXcibw9-TT9yq8yzgfhv8wuDP6Pg_f1kj6yo_FdNRDoyBWpZLjwve39WVNJ5tqCgsIEEbWOaATytk"/></div>
+<div class="w-6 h-6 rounded bg-surface-dim p-1 flex items-center justify-center text-[10px] font-label font-bold text-on-surface-variant">+1</div>
+</div>
+<div class="flex justify-between items-center border-t border-outline-variant/20 pt-4">
+<span class="text-[10px] font-label uppercase tracking-tighter text-outline">55 Citations</span>
+<span class="material-symbols-outlined text-primary text-xl" data-icon="lan">lan</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Create New "Add Journal" Card -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] rounded-r-lg border-2 border-dashed border-outline-variant/40 flex flex-col items-center justify-center p-8 bg-surface-container-low/30 hover:border-primary/40 hover:bg-surface-container-low transition-all">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="add">add</span>
+</div>
+<p class="font-label uppercase tracking-widest text-xs font-bold text-on-surface-variant">Bind New Collection</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Contextual FAB (Only on Home/Dashboard/Library) -->
+<button class="fixed bottom-12 right-12 w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform z-50 group overflow-hidden">
+<div class="absolute inset-0 bg-tertiary opacity-0 group-hover:opacity-10 transition-opacity"></div>
+<span class="material-symbols-outlined text-3xl" data-icon="edit_note">edit_note</span>
+</button>
+</main>
+<!-- Background Noise Overlay -->
+<div class="fixed inset-0 pointer-events-none parchment-grain"></div>
+</body></html>

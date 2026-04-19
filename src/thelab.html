@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Knowledge Relay | THE_LAB</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Public+Sans:wght@100..900&amp;family=Space+Grotesk:wght@300..700&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#95d3ba",
+                    "on-background": "#1b1c1a",
+                    "inverse-on-surface": "#f2f0ed",
+                    "outline": "#707974",
+                    "tertiary-fixed-dim": "#ffb68e",
+                    "inverse-surface": "#30312e",
+                    "surface": "#fbf9f5",
+                    "outline-variant": "#bfc9c3",
+                    "on-surface": "#1b1c1a",
+                    "secondary-fixed": "#dee2f3",
+                    "inverse-primary": "#95d3ba",
+                    "secondary-fixed-dim": "#c2c6d6",
+                    "secondary-container": "#dee2f3",
+                    "on-tertiary-fixed-variant": "#763300",
+                    "on-error": "#ffffff",
+                    "surface-container-high": "#eae8e4",
+                    "tertiary": "#502000",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#f5f3ef",
+                    "on-secondary-fixed": "#161b27",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#2b6954",
+                    "on-primary-fixed": "#002117",
+                    "surface-container": "#efeeea",
+                    "primary-container": "#064e3b",
+                    "primary": "#003527",
+                    "on-secondary-container": "#5f6472",
+                    "tertiary-container": "#733100",
+                    "primary-fixed": "#b0f0d6",
+                    "on-primary-fixed-variant": "#0b513d",
+                    "surface-variant": "#e4e2de",
+                    "surface-container-highest": "#e4e2de",
+                    "on-error-container": "#93000a",
+                    "background": "#fbf9f5",
+                    "on-surface-variant": "#404944",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#ffdbca",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#424754",
+                    "error-container": "#ffdad6",
+                    "on-primary-container": "#80bea6",
+                    "secondary": "#595e6c",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#331200",
+                    "surface-dim": "#dbdad6",
+                    "surface-bright": "#fbf9f5",
+                    "on-tertiary-container": "#ff985a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader"],
+                    "body": ["Public Sans"],
+                    "label": ["Space Grotesk"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #fbf9f5;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface min-h-screen flex">
+<!-- SideNavBar (Execution from JSON) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full flex-col py-6 bg-[#f5f3ef] dark:bg-slate-900 h-screen w-64 border-r-0 z-50">
+<div class="px-6 mb-8">
+<h1 class="font-['Newsreader'] font-bold text-[#003527] dark:text-emerald-500 text-2xl">Knowledge Relay</h1>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-[#dbdad6] dark:hover:bg-slate-800 rounded-lg mx-2 transition-all font-['Space_Grotesk'] uppercase tracking-widest text-xs" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="mail">mail</span>
+                INBOX
+            </a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-[#dbdad6] dark:hover:bg-slate-800 rounded-lg mx-2 transition-all font-['Space_Grotesk'] uppercase tracking-widest text-xs" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="book_2">book_2</span>
+                LIBRARY
+            </a>
+<a class="flex items-center px-4 py-3 bg-[#064e3b] text-white rounded-lg mx-2 font-['Space_Grotesk'] uppercase tracking-widest text-xs" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="science">science</span>
+                THE_LAB
+            </a>
+<a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-[#dbdad6] dark:hover:bg-slate-800 rounded-lg mx-2 transition-all font-['Space_Grotesk'] uppercase tracking-widest text-xs" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings">settings</span>
+                SETTINGS
+            </a>
+</nav>
+<div class="px-4 py-4 mt-auto border-t border-outline-variant/20">
+<div class="flex items-center p-2 mb-4 bg-surface-container-highest/30 rounded-xl">
+<img alt="The Curator" class="w-10 h-10 rounded-full object-cover grayscale border-2 border-primary/20" data-alt="portrait of a distinguished elderly librarian with spectacles in a softly lit archive environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtGDlSH1z7OaT8ohriRUSXLLlQ7JOPMqF2WieoFARfVZ3Q1aZyrH9uL-FFypLHQ5fEQ4a9PCRk8wsuFkgAoVUmJrHBx8KZmQ09qeecYYfREPhxmDb3vkPLWmD1oZtD0nHvNODWLKbHpa2TGaTg56A-L6ZffjdWTwcyMAaCKz3FYiEfsQxYbcd-AQ_8be1dX8y4HVa-fkVIlUccuGfLOgb9MhtAQgyig5voEKgNDAimlgxAupNJpUjzKWx_qwKkHmufRz2XlIFexq0"/>
+<div class="ml-3">
+<p class="font-headline font-bold text-sm text-primary">The Curator</p>
+<p class="font-label text-[10px] uppercase tracking-tighter opacity-60">Lead Archivist</p>
+</div>
+</div>
+<button class="w-full py-2 px-4 bg-primary-container text-on-primary-container rounded-xl font-label text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">
+                Inquire with The Curator...
+            </button>
+<div class="mt-4 space-y-1">
+<a class="flex items-center px-4 py-2 text-slate-500 text-[10px] font-label uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-sm mr-2" data-icon="help">help</span> Support
+                </a>
+<a class="flex items-center px-4 py-2 text-slate-500 text-[10px] font-label uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined text-sm mr-2" data-icon="logout">logout</span> Sign Out
+                </a>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-0 md:ml-64 relative flex flex-col h-screen">
+<!-- TopNavBar (Execution from JSON) -->
+<header class="sticky top-0 z-40 bg-[#fbf9f5] dark:bg-slate-950 backdrop-blur-md bg-opacity-90 w-full">
+<div class="flex justify-between items-center px-8 py-4 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="font-['Newsreader'] font-bold text-[#003527] dark:text-emerald-500 text-2xl">THE_LAB</span>
+<nav class="hidden lg:flex gap-6">
+<a class="text-slate-500 dark:text-slate-400 font-medium font-['Newsreader'] italic text-2xl tracking-tight hover:text-[#003527] transition-colors" href="#">INBOX</a>
+<a class="text-slate-500 dark:text-slate-400 font-medium font-['Newsreader'] italic text-2xl tracking-tight hover:text-[#003527] transition-colors" href="#">LIBRARY</a>
+<a class="text-[#003527] dark:text-emerald-400 border-b-2 border-[#003527] dark:border-emerald-500 font-bold font-['Newsreader'] italic text-2xl tracking-tight" href="#">THE_LAB</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant" data-icon="search">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary w-64" placeholder="Scan archives..." type="text"/>
+</div>
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Chat Output Region -->
+<div class="flex-1 overflow-y-auto px-6 py-12 flex flex-col items-center">
+<div class="w-full max-w-3xl space-y-12">
+<!-- Initial State Illustration or Empty Prompt State -->
+<div class="text-center space-y-4 mb-20">
+<div class="inline-block px-4 py-1 rounded-full border border-primary/10 font-label text-[10px] tracking-[0.2em] text-primary/60 uppercase">
+                        Active Experiment: Neural Retrieval
+                    </div>
+<h2 class="font-headline text-5xl md:text-6xl text-on-secondary-fixed italic tracking-tight">Synthesize your world.</h2>
+</div>
+<!-- AI Scholarly Response Example -->
+<div class="group relative bg-surface-container-low p-8 rounded-xl transition-all hover:bg-surface-container transition-colors duration-500">
+<div class="absolute -left-4 top-8 flex flex-col items-center gap-2">
+<div class="w-1 h-12 bg-primary/20 rounded-full"></div>
+<span class="font-label text-[10px] text-primary -rotate-90 origin-left translate-y-8">VERIFIED</span>
+</div>
+<div class="space-y-6">
+<header class="flex justify-between items-center">
+<span class="font-label text-xs uppercase tracking-widest text-primary/60">Response Analysis / Vol. 42</span>
+<span class="material-symbols-outlined text-primary/40 text-sm" data-icon="auto_awesome">auto_awesome</span>
+</header>
+<div class="font-body text-lg leading-relaxed text-on-surface-variant">
+                            Based on your private archives and the connected scholarly nodes, the convergence of <span class="text-primary font-semibold">asymmetric design</span> and <span class="text-primary font-semibold">cognitive load</span> suggests that intentional friction can actually enhance retention rates by 12.4%.
+                        </div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/10 shadow-sm">
+<span class="font-label text-[10px] uppercase tracking-widest text-tertiary">Citation A</span>
+<p class="text-xs font-body mt-2 leading-snug">"The Friction Principle in Digital Architecture" — Dr. Aris Thorne (2023)</p>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/10 shadow-sm">
+<span class="font-label text-[10px] uppercase tracking-widest text-tertiary">Citation B</span>
+<p class="text-xs font-body mt-2 leading-snug">Journal of Neuro-Typography, Issue #09, Personal Library</p>
+</div>
+</div>
+<div class="flex gap-4 pt-4 border-t border-outline-variant/10">
+<button class="flex items-center gap-2 font-label text-[10px] uppercase tracking-widest text-primary hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined text-base" data-icon="content_copy">content_copy</span> Copy Synthesis
+                            </button>
+<button class="flex items-center gap-2 font-label text-[10px] uppercase tracking-widest text-primary hover:text-tertiary transition-colors">
+<span class="material-symbols-outlined text-base" data-icon="bookmark">bookmark</span> Add to Library
+                            </button>
+</div>
+</div>
+</div>
+<!-- Second AI Response Example -->
+<div class="group relative bg-surface p-8 rounded-xl">
+<div class="space-y-6">
+<header class="flex justify-between items-center">
+<span class="font-label text-xs uppercase tracking-widest text-primary/40">Supplemental Data</span>
+</header>
+<div class="bg-surface-dim p-6 rounded-lg font-mono text-sm border-l-4 border-primary/30">
+<code>
+                                GET /api/v1/knowledge/graph?node="asymmetry"<br/>
+                                STATUS: 200 OK<br/>
+                                CORRELATIONS: Found 14 related nodes in "Design Philosophy".
+                            </code>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Input Area -->
+<footer class="w-full bg-[#fbf9f5]/80 backdrop-blur-md pt-8 pb-10 px-6">
+<div class="max-w-3xl mx-auto space-y-6">
+<!-- Prompt Chips -->
+<div class="flex flex-wrap gap-2 justify-center">
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 font-label text-[11px] uppercase tracking-wider text-on-surface-variant hover:border-primary hover:text-primary transition-all bg-surface-container-lowest">
+                        Summarize my recent research
+                    </button>
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 font-label text-[11px] uppercase tracking-wider text-on-surface-variant hover:border-primary hover:text-primary transition-all bg-surface-container-lowest">
+                        Draft a thesis overview
+                    </button>
+<button class="px-4 py-2 rounded-full border border-outline-variant/30 font-label text-[11px] uppercase tracking-wider text-on-surface-variant hover:border-primary hover:text-primary transition-all bg-surface-container-lowest">
+                        Find contradictions in my notes
+                    </button>
+</div>
+<!-- Main Search Bar -->
+<div class="relative group">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-primary/5 to-tertiary/5 rounded-2xl blur opacity-30 group-focus-within:opacity-100 transition duration-1000"></div>
+<div class="relative bg-surface-container-lowest border-b-2 border-outline-variant/40 focus-within:border-primary transition-colors flex items-end p-4 rounded-xl shadow-sm">
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 font-headline italic text-2xl text-primary resize-none placeholder:text-outline-variant/50 placeholder:italic min-h-[60px]" placeholder="Ask your Second Brain..." rows="1"></textarea>
+<div class="flex items-center gap-3 pb-2 pr-2">
+<button class="p-2 text-primary/40 hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="attach_file">attach_file</span>
+</button>
+<button class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined" data-icon="arrow_upward">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+<p class="text-center font-label text-[9px] uppercase tracking-[0.3em] text-outline-variant">
+                    Synthesis engine is currently referencing 12,431 archival entries
+                </p>
+</div>
+</footer>
+</main>
+<!-- Mobile Nav Bar (Execution from Rules) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-highest/90 backdrop-blur-lg flex justify-around py-4 border-t-0 shadow-2xl z-50">
+<a class="flex flex-col items-center text-primary/40" href="#">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</a>
+<a class="flex flex-col items-center text-primary/40" href="#">
+<span class="material-symbols-outlined" data-icon="book_2">book_2</span>
+</a>
+<a class="flex flex-col items-center text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="science" data-weight="fill">science</span>
+</a>
+<a class="flex flex-col items-center text-primary/40" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</a>
+</nav>
+</body></html>
