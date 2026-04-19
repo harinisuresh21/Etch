@@ -13,7 +13,7 @@ export default function App() {
         <Route path="/inbox" element={<Inbox />} />
         <Route path="/library" element={<Library />} />
         <Route path="/lab" element={<TheLab />} />
-        <Route path="/deepdive" element={<DeepDive />} />
+        <Route path="/deepdive/:id" element={<DeepDive />} />
       </Routes>
     </BrowserRouter>
   );

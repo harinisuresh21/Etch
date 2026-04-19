@@ -1,10 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function TheLab() {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const res = await fetch('/api/chat/history');
+        const data = await res.json();
+        setMessages(data);
+      } catch(e) { console.error(e); }
+    };
+    fetchHistory();
+  }, []);
+
+  const handleSend = async () => {
+    if(!input.trim()) return;
+    
+    const userMsg = { role: 'user', content: input };
+    setMessages(prev => [...prev, userMsg]);
+    setInput('');
+    setLoading(true);
+    
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMsg.content })
+      });
+      const data = await res.json();
+      setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
+    } catch (e) {
+      console.error(e);
+      setMessages(prev => [...prev, { role: 'assistant', content: 'Connection anomalous. Failed to reach synthesis engine.' }]);
+    }
+    setLoading(false);
+  };
+
   return (
     <>
-      <aside className="hidden xl:flex fixed left-0 top-0 h-full flex-col py-6 bg-[#f5f3ef] dark:bg-slate-900 h-screen w-64 border-r-0 z-50">
+      <aside className="animate-fade-in-right opacity-0-init hidden xl:flex fixed left-0 top-0 h-full flex-col py-6 bg-[#f5f3ef] dark:bg-slate-900 h-screen w-64 border-r-0 z-50">
 <div className="px-6 mb-8">
 <h1 className="font-['Newsreader'] font-bold text-[#003527] dark:text-emerald-500 text-2xl">Knowledge Relay</h1>
 </div>
@@ -71,63 +109,46 @@ export default function TheLab() {
 </header>
 
 <div className="flex-1 overflow-y-auto px-6 py-12 flex flex-col items-center">
-<div className="w-full max-w-3xl space-y-12">
-
-<div className="text-center space-y-4 mb-20">
+<div className="w-full max-w-3xl space-y-12 pb-32">
+<div className="text-center space-y-4 mb-20 animate-fade-in-up opacity-0-init delay-100">
 <div className="inline-block px-4 py-1 rounded-full border border-primary/10 font-label text-[10px] tracking-[0.2em] text-primary/60 uppercase">
-                        Active Experiment: Neural Retrieval
-                    </div>
-<h2 className="font-headline text-5xl md:text-6xl text-on-secondary-fixed italic tracking-tight">Synthesize your world.</h2>
+    Synthesis Protocol Active
+</div>
+<h2 className="font-headline text-5xl md:text-6xl text-on-secondary-fixed italic tracking-tight">Consult the Archives.</h2>
 </div>
 
-<div className="group relative bg-surface-container-low p-8 rounded-xl transition-all hover:bg-surface-container transition-colors duration-500">
-<div className="absolute -left-4 top-8 flex flex-col items-center gap-2">
-<div className="w-1 h-12 bg-primary/20 rounded-full"></div>
-<span className="font-label text-[10px] text-primary -rotate-90 origin-left translate-y-8">VERIFIED</span>
-</div>
-<div className="space-y-6">
-<header className="flex justify-between items-center">
-<span className="font-label text-xs uppercase tracking-widest text-primary/60">Response Analysis / Vol. 42</span>
-<span className="material-symbols-outlined text-primary/40 text-sm" data-icon="auto_awesome">auto_awesome</span>
-</header>
-<div className="font-body text-lg leading-relaxed text-on-surface-variant">
-                            Based on your private archives and the connected scholarly nodes, the convergence of <span className="text-primary font-semibold">asymmetric design</span> and <span className="text-primary font-semibold">cognitive load</span> suggests that intentional friction can actually enhance retention rates by 12.4%.
-                        </div>
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-<div className="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/10 shadow-sm">
-<span className="font-label text-[10px] uppercase tracking-widest text-tertiary">Citation A</span>
-<p className="text-xs font-body mt-2 leading-snug">"The Friction Principle in Digital Architecture" — Dr. Aris Thorne (2023)</p>
-</div>
-<div className="bg-surface-container-lowest p-4 rounded-lg border border-outline-variant/10 shadow-sm">
-<span className="font-label text-[10px] uppercase tracking-widest text-tertiary">Citation B</span>
-<p className="text-xs font-body mt-2 leading-snug">Journal of Neuro-Typography, Issue #09, Personal Library</p>
-</div>
-</div>
-<div className="flex gap-4 pt-4 border-t border-outline-variant/10">
-<button onClick={() => alert('Action triggered!')} className="flex items-center gap-2 font-label text-[10px] uppercase tracking-widest text-primary hover:text-tertiary transition-colors">
-<span className="material-symbols-outlined text-base" data-icon="content_copy">content_copy</span> Copy Synthesis
-                            </button>
-<button onClick={() => alert('Action triggered!')} className="flex items-center gap-2 font-label text-[10px] uppercase tracking-widest text-primary hover:text-tertiary transition-colors">
-<span className="material-symbols-outlined text-base" data-icon="bookmark">bookmark</span> Add to Library
-                            </button>
-</div>
-</div>
-</div>
-
-<div className="group relative bg-surface p-8 rounded-xl">
-<div className="space-y-6">
-<header className="flex justify-between items-center">
-<span className="font-label text-xs uppercase tracking-widest text-primary/40">Supplemental Data</span>
-</header>
-<div className="bg-surface-dim p-6 rounded-lg font-mono text-sm border-l-4 border-primary/30">
-<code>
-                                GET /api/v1/knowledge/graph?node="asymmetry"<br/>
-                                STATUS: 200 OK<br/>
-                                CORRELATIONS: Found 14 related nodes in "Design Philosophy".
-                            </code>
-</div>
-</div>
-</div>
+{messages.map((msg, i) => (
+  msg.role === 'user' ? (
+    <div key={i} className="flex justify-end animate-fade-in-up">
+       <div className="max-w-[80%] bg-surface-dim p-4 rounded-xl rounded-tr-sm text-sm text-on-surface-variant font-body">
+         {msg.content}
+       </div>
+    </div>
+  ) : (
+    <div key={i} className="group relative bg-surface-container-low p-8 rounded-xl transition-all animate-fade-in-up">
+      <div className="absolute -left-4 top-8 flex flex-col items-center gap-2">
+        <div className="w-1 h-12 bg-primary/20 rounded-full"></div>
+        <span className="font-label text-[10px] text-primary -rotate-90 origin-left translate-y-8">VERIFIED</span>
+      </div>
+      <div className="space-y-6">
+        <header className="flex justify-between items-center">
+          <span className="font-label text-xs uppercase tracking-widest text-primary/60">Response Analysis</span>
+          <span className="material-symbols-outlined text-primary/40 text-sm" data-icon="auto_awesome">auto_awesome</span>
+        </header>
+        <div className="font-body text-sm leading-relaxed text-on-surface-variant" dangerouslySetInnerHTML={{__html: msg.content.replace(/\\n/g, '<br/>')}} />
+      </div>
+    </div>
+  )
+))}
+{loading && (
+    <div className="group relative bg-surface-container-low p-8 rounded-xl animate-pulse">
+        <div className="space-y-4">
+            <div className="h-4 bg-outline-variant/20 rounded w-1/4"></div>
+            <div className="h-4 bg-outline-variant/20 rounded w-full"></div>
+            <div className="h-4 bg-outline-variant/20 rounded w-5/6"></div>
+        </div>
+    </div>
+)}
 </div>
 </div>
 
@@ -149,12 +170,12 @@ export default function TheLab() {
 <div className="relative group">
 <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/5 to-tertiary/5 rounded-2xl blur opacity-30 group-focus-within:opacity-100 transition duration-1000"></div>
 <div className="relative bg-surface-container-lowest border-b-2 border-outline-variant/40 focus-within:border-primary transition-colors flex items-end p-4 rounded-xl shadow-sm">
-<textarea className="flex-1 bg-transparent border-none focus:ring-0 font-headline italic text-2xl text-primary resize-none placeholder:text-outline-variant/50 placeholder:italic min-h-[60px]" placeholder="Ask your Second Brain..." rows="1"></textarea>
+<textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if(e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } }} className="flex-1 bg-transparent border-none focus:ring-0 font-headline italic text-2xl text-primary resize-none placeholder:text-outline-variant/50 placeholder:italic min-h-[60px]" placeholder="Ask your Second Brain..." rows="1"></textarea>
 <div className="flex items-center gap-3 pb-2 pr-2">
 <button onClick={() => alert('Action triggered!')} className="p-2 text-primary/40 hover:text-primary transition-colors">
 <span className="material-symbols-outlined" data-icon="attach_file">attach_file</span>
 </button>
-<button onClick={() => alert('Action triggered!')} className="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
+<button onClick={handleSend} disabled={loading} className="w-12 h-12 disabled:opacity-50 disabled:scale-100 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
 <span className="material-symbols-outlined" data-icon="arrow_upward">arrow_upward</span>
 </button>
 </div>

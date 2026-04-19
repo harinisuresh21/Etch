@@ -72,6 +72,35 @@
                         "headline": ["Newsreader", "serif"],
                         "body": ["Public Sans", "sans-serif"],
                         "label": ["Space Grotesk", "sans-serif"]
+                    },
+                    "keyframes": {
+                        "fade-in-up": {
+                            "0%": { opacity: "0", transform: "translateY(20px)" },
+                            "100%": { opacity: "1", transform: "translateY(0)" }
+                        },
+                        "fade-in-right": {
+                            "0%": { opacity: "0", transform: "translateX(-20px)" },
+                            "100%": { opacity: "1", transform: "translateX(0)" }
+                        },
+                        "fade-in": {
+                            "0%": { opacity: "0" },
+                            "100%": { opacity: "1" }
+                        },
+                        "float": {
+                            "0%, 100%": { transform: "translateY(0)" },
+                            "50%": { transform: "translateY(-10px)" }
+                        },
+                        "pulse-glow": {
+                            "0%, 100%": { opacity: "1", boxShadow: "0 0 0 0 rgba(0, 53, 39, 0.4)" },
+                            "50%": { opacity: "0.85", boxShadow: "0 0 20px 0 rgba(0, 53, 39, 0.7)" }
+                        }
+                    },
+                    "animation": {
+                        "fade-in-up": "fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                        "fade-in-right": "fade-in-right 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+                        "fade-in": "fade-in 1s ease-out forwards",
+                        "float": "float 6s ease-in-out infinite",
+                        "pulse-glow": "pulse-glow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite"
                     }
                 },
             },

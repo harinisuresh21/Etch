@@ -6,7 +6,7 @@ export default function Library() {
     <>
       <div className="parchment-grain fixed inset-0 z-50 pointer-events-none"></div>
 
-<aside className="hidden xl:flex fixed left-0 top-0 h-full flex flex-col py-6 bg-surface-container-low border-r-0 w-64 z-40">
+<aside className="animate-fade-in-right opacity-0-init hidden xl:flex fixed left-0 top-0 h-full flex flex-col py-6 bg-surface-container-low border-r-0 w-64 z-40">
 <div className="px-6 mb-12">
 <h1 className="font-headline font-bold text-primary text-2xl">Knowledge Relay</h1>
 </div>
@@ -77,8 +77,8 @@ export default function Library() {
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
 
-<div className="group cursor-pointer">
-<div className="journal-cover relative aspect-[3/4] bg-surface-container-lowest rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div className="group cursor-pointer animate-fade-in-up opacity-0-init delay-100\">
+<div className="journal-cover hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 relative aspect-[3/4] bg-surface-container-lowest rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
 <div className="absolute inset-y-0 left-0 w-3 journal-spine"></div>
 <div className="mb-4">
 <span className="font-label text-[10px] uppercase tracking-widest text-tertiary-container font-bold px-2 py-0.5 border border-tertiary-container/30 rounded">Volume IV</span>
@@ -100,8 +100,8 @@ export default function Library() {
 </div>
 </div>
 
-<div className="group cursor-pointer">
-<div className="journal-cover relative aspect-[3/4] bg-surface-container-low rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div className="group cursor-pointer animate-fade-in-up opacity-0-init delay-200\">
+<div className="journal-cover hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 relative aspect-[3/4] bg-surface-container-low rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
 <div className="absolute inset-y-0 left-0 w-3 journal-spine"></div>
 <div className="mb-4">
 <span className="font-label text-[10px] uppercase tracking-widest text-primary font-bold px-2 py-0.5 border border-primary/30 rounded">In Progress</span>
@@ -122,8 +122,8 @@ export default function Library() {
 </div>
 </div>
 
-<div className="group cursor-pointer">
-<div className="journal-cover relative aspect-[3/4] bg-primary rounded-r-lg overflow-hidden border border-primary/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div className="group cursor-pointer animate-fade-in-up opacity-0-init delay-300\">
+<div className="journal-cover hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 relative aspect-[3/4] bg-primary rounded-r-lg overflow-hidden border border-primary/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
 <div className="absolute inset-y-0 left-0 w-3 bg-black/20"></div>
 <div className="mb-4">
 <span className="font-label text-[10px] uppercase tracking-widest text-on-primary-container font-bold px-2 py-0.5 border border-on-primary-container/30 rounded">Editor's Choice</span>
@@ -143,8 +143,8 @@ export default function Library() {
 </div>
 </div>
 
-<div className="group cursor-pointer">
-<div className="journal-cover relative aspect-[3/4] bg-surface-container-lowest rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div className="group cursor-pointer animate-fade-in-up opacity-0-init delay-400\">
+<div className="journal-cover hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 relative aspect-[3/4] bg-surface-container-lowest rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
 <div className="absolute inset-y-0 left-0 w-3 journal-spine"></div>
 <div className="mb-4">
 <span className="font-label text-[10px] uppercase tracking-widest text-outline font-bold px-2 py-0.5 border border-outline-variant/30 rounded">Archive</span>
@@ -164,8 +164,8 @@ export default function Library() {
 </div>
 </div>
 
-<div className="group cursor-pointer">
-<div className="journal-cover relative aspect-[3/4] bg-surface-container-low rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
+<div className="group cursor-pointer animate-fade-in-up opacity-0-init delay-500\">
+<div className="journal-cover hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 relative aspect-[3/4] bg-surface-container-low rounded-r-lg overflow-hidden border border-outline-variant/10 flex flex-col p-8 transition-transform group-hover:-translate-y-2">
 <div className="absolute inset-y-0 left-0 w-3 journal-spine"></div>
 <div className="mb-4">
 <span className="font-label text-[10px] uppercase tracking-widest text-tertiary-container font-bold px-2 py-0.5 border border-tertiary-container/30 rounded">Vol IX</span>
@@ -185,7 +185,7 @@ export default function Library() {
 </div>
 </div>
 
-<div className="group cursor-pointer">
+<div className="group cursor-pointer animate-fade-in-up opacity-0-init delay-500\">
 <div className="relative aspect-[3/4] rounded-r-lg border-2 border-dashed border-outline-variant/40 flex flex-col items-center justify-center p-8 bg-surface-container-low/30 hover:border-primary/40 hover:bg-surface-container-low transition-all">
 <div className="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
 <span className="material-symbols-outlined text-primary text-3xl" data-icon="add">add</span>
@@ -196,7 +196,7 @@ export default function Library() {
 </div>
 </section>
 
-<button onClick={() => alert('Action triggered!')} className="fixed bottom-12 right-12 w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform z-50 group overflow-hidden">
+<button onClick={() => alert('Action triggered!')} className="fixed bottom-12 right-12 w-16 h-16 animate-float bg-primary text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform z-50 group overflow-hidden">
 <div className="absolute inset-0 bg-tertiary opacity-0 group-hover:opacity-10 transition-opacity"></div>
 <span className="material-symbols-outlined text-3xl" data-icon="edit_note">edit_note</span>
 </button>

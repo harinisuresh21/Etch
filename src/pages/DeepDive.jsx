@@ -1,7 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 export default function DeepDive() {
+  const { id } = useParams();
+  const [article, setArticle] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        const res = await fetch(`/api/links/${id}`);
+        if(res.ok) {
+           const data = await res.json();
+           setArticle(data);
+        }
+      } catch(e) { console.error(e); }
+      setLoading(false);
+    };
+    fetchArticle();
+  }, [id]);
+
+  if(loading) return <div className="min-h-screen flex items-center justify-center font-headline text-3xl italic text-primary">Accessing Archives...</div>;
+  if(!article) return <div className="min-h-screen flex items-center justify-center font-headline text-3xl italic text-error">Architectural Anomaly: Record Not Found.</div>;
+
+
   return (
     <>
       <div className="fixed inset-0 parchment-grain z-0"></div>
@@ -32,7 +54,7 @@ export default function DeepDive() {
 
 <div className="col-span-12 lg:col-span-8 bg-surface-container-lowest lg:shadow-[0px_12px_32px_rgba(27,28,26,0.06)] px-6 md:px-16 py-12 md:py-20">
 
-<header className="mb-12">
+<header className="mb-12 animate-fade-in-up opacity-0-init delay-100">
 <div className="flex items-center gap-3 mb-6">
 <span className="px-3 py-1 bg-tertiary-container text-on-tertiary-fixed font-label text-[10px] tracking-widest uppercase rounded-full">Editor's Choice</span>
 <span className="text-on-surface-variant font-label text-[10px] tracking-widest uppercase">Published March 14, 2024</span>
