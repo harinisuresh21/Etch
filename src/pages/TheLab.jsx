@@ -1,207 +1,147 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import AppShell from '../components/AppShell'
+import { fetchChatHistory, sendChatMessage } from '../lib/api'
+
+const suggestions = [
+  'Where is my cybersecurity article?',
+  'Summarize the article about Playwright MCP.',
+  'Which saved sources mention AI testing?',
+]
 
 export default function TheLab() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [messages, setMessages] = useState([])
+  const [sources, setSources] = useState([])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    const fetchHistory = async () => {
+    async function loadHistory() {
+      setLoading(true)
       try {
-        const res = await fetch('/api/chat/history');
-        const data = await res.json();
-        setMessages(data);
-      } catch(e) { console.error(e); }
-    };
-    fetchHistory();
-  }, []);
-
-  const handleSend = async () => {
-    if(!input.trim()) return;
-    
-    const userMsg = { role: 'user', content: input };
-    setMessages(prev => [...prev, userMsg]);
-    setInput('');
-    setLoading(true);
-    
-    try {
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMsg.content })
-      });
-      const data = await res.json();
-      setMessages(prev => [...prev, { role: 'assistant', content: data.response }]);
-    } catch (e) {
-      console.error(e);
-      setMessages(prev => [...prev, { role: 'assistant', content: 'Connection anomalous. Failed to reach synthesis engine.' }]);
+        const data = await fetchChatHistory()
+        setMessages(Array.isArray(data) ? data : [])
+        setError('')
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
     }
-    setLoading(false);
-  };
+    loadHistory()
+  }, [])
+
+  async function handleSend(messageOverride) {
+    const message = (messageOverride ?? input).trim()
+    if (!message || sending) return
+    const optimisticUserMessage = { role: 'user', content: message }
+    setMessages((current) => [...current, optimisticUserMessage])
+    setInput('')
+    setSending(true)
+    setError('')
+    try {
+      const data = await sendChatMessage(message)
+      setMessages((current) => [...current, { role: 'assistant', content: data.response }])
+      setSources(data.sources || [])
+    } catch (err) {
+      setMessages((current) => [
+        ...current,
+        { role: 'assistant', content: 'The archive assistant failed to answer that request.' },
+      ])
+      setError(err.message)
+    } finally {
+      setSending(false)
+    }
+  }
 
   return (
-    <>
-      <aside className="animate-fade-in-right opacity-0-init hidden xl:flex fixed left-0 top-0 h-full flex-col py-6 bg-[#f5f3ef] dark:bg-slate-900 h-screen w-64 border-r-0 z-50">
-<div className="px-6 mb-8">
-<h1 className="font-['Newsreader'] font-bold text-[#003527] dark:text-emerald-500 text-2xl">Knowledge Relay</h1>
-</div>
-<nav className="flex-1 space-y-2">
-<Link className="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-[#dbdad6] dark:hover:bg-slate-800 rounded-lg mx-2 transition-all font-['Space_Grotesk'] uppercase tracking-widest text-xs" to="/inbox">
-<span className="material-symbols-outlined mr-3" data-icon="mail">mail</span>
-                INBOX
-            </Link>
-<Link className="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-[#dbdad6] dark:hover:bg-slate-800 rounded-lg mx-2 transition-all font-['Space_Grotesk'] uppercase tracking-widest text-xs" to="/library">
-<span className="material-symbols-outlined mr-3" data-icon="book_2">book_2</span>
-                LIBRARY
-            </Link>
-<Link className="flex items-center px-4 py-3 bg-[#064e3b] text-white rounded-lg mx-2 font-['Space_Grotesk'] uppercase tracking-widest text-xs" to="/lab">
-<span className="material-symbols-outlined mr-3" data-icon="science">science</span>
-                THE_LAB
-            </Link>
-<Link className="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-[#dbdad6] dark:hover:bg-slate-800 rounded-lg mx-2 transition-all font-['Space_Grotesk'] uppercase tracking-widest text-xs" to="/settings">
-<span className="material-symbols-outlined mr-3" data-icon="settings">settings</span>
-                SETTINGS
-            </Link>
-</nav>
-<div className="px-4 py-4 mt-auto border-t border-outline-variant/20">
-<div className="flex items-center p-2 mb-4 bg-surface-container-highest/30 rounded-xl">
-<img alt="The Curator" className="w-10 h-10 rounded-full object-cover grayscale border-2 border-primary/20" data-alt="portrait of a distinguished elderly librarian with spectacles in a softly lit archive environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtGDlSH1z7OaT8ohriRUSXLLlQ7JOPMqF2WieoFARfVZ3Q1aZyrH9uL-FFypLHQ5fEQ4a9PCRk8wsuFkgAoVUmJrHBx8KZmQ09qeecYYfREPhxmDb3vkPLWmD1oZtD0nHvNODWLKbHpa2TGaTg56A-L6ZffjdWTwcyMAaCKz3FYiEfsQxYbcd-AQ_8be1dX8y4HVa-fkVIlUccuGfLOgb9MhtAQgyig5voEKgNDAimlgxAupNJpUjzKWx_qwKkHmufRz2XlIFexq0"/>
-<div className="ml-3">
-<p className="font-headline font-bold text-sm text-primary">The Curator</p>
-<p className="font-label text-[10px] uppercase tracking-tighter opacity-60">Lead Archivist</p>
-</div>
-</div>
-<button onClick={() => alert('Action triggered!')} className="w-full py-2 px-4 bg-primary-container text-on-primary-container rounded-xl font-label text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">
-                Inquire with The Curator...
+    <AppShell
+      title="Archive assistant"
+      subtitle="Ask across every saved article. Etch retrieves relevant entries from your archive and answers from that context first."
+      actions={(
+        <Link to="/library" className="button-secondary">
+          Browse library
+        </Link>
+      )}
+    >
+      <section className="chat-layout">
+        <div className="panel chat-panel">
+          <div className="suggestion-row">
+            {suggestions.map((suggestion) => (
+              <button
+                key={suggestion}
+                type="button"
+                className="suggestion-chip"
+                onClick={() => handleSend(suggestion)}
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
+
+          <div className="chat-log">
+            {loading ? <p className="empty-state">Loading chat history...</p> : null}
+            {!loading && messages.length === 0 ? (
+              <p className="empty-state">Ask a question about any saved article.</p>
+            ) : null}
+            {messages.map((message, index) => (
+              <div
+                key={`${message.role}-${index}`}
+                className={`chat-bubble ${message.role === 'user' ? 'chat-user' : 'chat-assistant'}`}
+              >
+                <div className="chat-role">{message.role === 'user' ? 'You' : 'Etch'}</div>
+                <div className="chat-content">{message.content}</div>
+              </div>
+            ))}
+            {sending ? (
+              <div className="chat-bubble chat-assistant">
+                <div className="chat-role">Etch</div>
+                <div className="chat-content">Thinking through your archive...</div>
+              </div>
+            ) : null}
+          </div>
+
+          <form
+            className="chat-input-row"
+            onSubmit={(event) => {
+              event.preventDefault()
+              handleSend()
+            }}
+          >
+            <textarea
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              placeholder="Ask about a topic, article title, or detail from your saved links"
+              rows="3"
+            />
+            <button type="submit" className="button-primary" disabled={sending}>
+              Send
             </button>
-<div className="mt-4 space-y-1">
-<Link className="flex items-center px-4 py-2 text-slate-500 text-[10px] font-label uppercase tracking-widest" to="#">
-<span className="material-symbols-outlined text-sm mr-2" data-icon="help">help</span> Support
-                </Link>
-<Link className="flex items-center px-4 py-2 text-slate-500 text-[10px] font-label uppercase tracking-widest" to="#">
-<span className="material-symbols-outlined text-sm mr-2" data-icon="logout">logout</span> Sign Out
-                </Link>
-</div>
-</div>
-</aside>
-
-<main className="flex-1 ml-0 md:ml-64 relative flex flex-col h-screen">
-
-<header className="sticky top-0 z-40 bg-[#fbf9f5] dark:bg-slate-950 backdrop-blur-md bg-opacity-90 w-full">
-<div className="flex justify-between items-center px-8 py-4 w-full max-w-screen-2xl mx-auto">
-<div className="flex items-center gap-8">
-<span className="font-['Newsreader'] font-bold text-[#003527] dark:text-emerald-500 text-2xl">THE_LAB</span>
-<nav className="hidden lg:flex gap-6">
-<Link className="text-slate-500 dark:text-slate-400 font-medium font-['Newsreader'] italic text-2xl tracking-tight hover:text-[#003527] transition-colors" to="/inbox">INBOX</Link>
-<Link className="text-slate-500 dark:text-slate-400 font-medium font-['Newsreader'] italic text-2xl tracking-tight hover:text-[#003527] transition-colors" to="/library">LIBRARY</Link>
-<Link className="text-[#003527] dark:text-emerald-400 border-b-2 border-[#003527] dark:border-emerald-500 font-bold font-['Newsreader'] italic text-2xl tracking-tight" to="/lab">THE_LAB</Link>
-</nav>
-</div>
-<div className="flex items-center gap-4">
-<div className="relative group hidden sm:block">
-<span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant" data-icon="search">search</span>
-<input className="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary w-64" placeholder="Scan archives..." type="text"/>
-</div>
-<span className="material-symbols-outlined text-primary cursor-pointer" data-icon="account_circle">account_circle</span>
-</div>
-</div>
-</header>
-
-<div className="flex-1 overflow-y-auto px-6 py-12 flex flex-col items-center">
-<div className="w-full max-w-3xl space-y-12 pb-32">
-<div className="text-center space-y-4 mb-20 animate-fade-in-up opacity-0-init delay-100">
-<div className="inline-block px-4 py-1 rounded-full border border-primary/10 font-label text-[10px] tracking-[0.2em] text-primary/60 uppercase">
-    Synthesis Protocol Active
-</div>
-<h2 className="font-headline text-5xl md:text-6xl text-on-secondary-fixed italic tracking-tight">Consult the Archives.</h2>
-</div>
-
-{messages.map((msg, i) => (
-  msg.role === 'user' ? (
-    <div key={i} className="flex justify-end animate-fade-in-up">
-       <div className="max-w-[80%] bg-surface-dim p-4 rounded-xl rounded-tr-sm text-sm text-on-surface-variant font-body">
-         {msg.content}
-       </div>
-    </div>
-  ) : (
-    <div key={i} className="group relative bg-surface-container-low p-8 rounded-xl transition-all animate-fade-in-up">
-      <div className="absolute -left-4 top-8 flex flex-col items-center gap-2">
-        <div className="w-1 h-12 bg-primary/20 rounded-full"></div>
-        <span className="font-label text-[10px] text-primary -rotate-90 origin-left translate-y-8">VERIFIED</span>
-      </div>
-      <div className="space-y-6">
-        <header className="flex justify-between items-center">
-          <span className="font-label text-xs uppercase tracking-widest text-primary/60">Response Analysis</span>
-          <span className="material-symbols-outlined text-primary/40 text-sm" data-icon="auto_awesome">auto_awesome</span>
-        </header>
-        <div className="font-body text-sm leading-relaxed text-on-surface-variant" dangerouslySetInnerHTML={{__html: msg.content.replace(/\\n/g, '<br/>')}} />
-      </div>
-    </div>
-  )
-))}
-{loading && (
-    <div className="group relative bg-surface-container-low p-8 rounded-xl animate-pulse">
-        <div className="space-y-4">
-            <div className="h-4 bg-outline-variant/20 rounded w-1/4"></div>
-            <div className="h-4 bg-outline-variant/20 rounded w-full"></div>
-            <div className="h-4 bg-outline-variant/20 rounded w-5/6"></div>
+          </form>
+          {error ? <p className="status-error">{error}</p> : null}
         </div>
-    </div>
-)}
-</div>
-</div>
 
-<footer className="w-full bg-[#fbf9f5]/80 backdrop-blur-md pt-8 pb-10 px-6">
-<div className="max-w-3xl mx-auto space-y-6">
-
-<div className="flex flex-wrap gap-2 justify-center">
-<button onClick={() => alert('Action triggered!')} className="px-4 py-2 rounded-full border border-outline-variant/30 font-label text-[11px] uppercase tracking-wider text-on-surface-variant hover:border-primary hover:text-primary transition-all bg-surface-container-lowest">
-                        Summarize my recent research
-                    </button>
-<button onClick={() => alert('Action triggered!')} className="px-4 py-2 rounded-full border border-outline-variant/30 font-label text-[11px] uppercase tracking-wider text-on-surface-variant hover:border-primary hover:text-primary transition-all bg-surface-container-lowest">
-                        Draft a thesis overview
-                    </button>
-<button onClick={() => alert('Action triggered!')} className="px-4 py-2 rounded-full border border-outline-variant/30 font-label text-[11px] uppercase tracking-wider text-on-surface-variant hover:border-primary hover:text-primary transition-all bg-surface-container-lowest">
-                        Find contradictions in my notes
-                    </button>
-</div>
-
-<div className="relative group">
-<div className="absolute -inset-0.5 bg-gradient-to-r from-primary/5 to-tertiary/5 rounded-2xl blur opacity-30 group-focus-within:opacity-100 transition duration-1000"></div>
-<div className="relative bg-surface-container-lowest border-b-2 border-outline-variant/40 focus-within:border-primary transition-colors flex items-end p-4 rounded-xl shadow-sm">
-<textarea value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if(e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSend(); } }} className="flex-1 bg-transparent border-none focus:ring-0 font-headline italic text-2xl text-primary resize-none placeholder:text-outline-variant/50 placeholder:italic min-h-[60px]" placeholder="Ask your Second Brain..." rows="1"></textarea>
-<div className="flex items-center gap-3 pb-2 pr-2">
-<button onClick={() => alert('Action triggered!')} className="p-2 text-primary/40 hover:text-primary transition-colors">
-<span className="material-symbols-outlined" data-icon="attach_file">attach_file</span>
-</button>
-<button onClick={handleSend} disabled={loading} className="w-12 h-12 disabled:opacity-50 disabled:scale-100 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-primary/20">
-<span className="material-symbols-outlined" data-icon="arrow_upward">arrow_upward</span>
-</button>
-</div>
-</div>
-</div>
-<p className="text-center font-label text-[9px] uppercase tracking-[0.3em] text-outline-variant">
-                    Synthesis engine is currently referencing 12,431 archival entries
-                </p>
-</div>
-</footer>
-</main>
-
-<nav className="xl:hidden fixed bottom-0 left-0 w-full bg-surface-container-highest/90 backdrop-blur-lg flex justify-around py-4 border-t-0 shadow-2xl z-50">
-<Link className="flex flex-col items-center text-primary/40" to="#">
-<span className="material-symbols-outlined" data-icon="mail">mail</span>
-</Link>
-<Link className="flex flex-col items-center text-primary/40" to="#">
-<span className="material-symbols-outlined" data-icon="book_2">book_2</span>
-</Link>
-<Link className="flex flex-col items-center text-primary" to="#">
-<span className="material-symbols-outlined" data-icon="science" data-weight="fill">science</span>
-</Link>
-<Link className="flex flex-col items-center text-primary/40" to="#">
-<span className="material-symbols-outlined" data-icon="settings">settings</span>
-</Link>
-</nav>
-    </>
-  );
+        <aside className="stack-column">
+          <div className="panel">
+            <p className="panel-kicker">Matched sources</p>
+            {sources.length === 0 ? (
+              <p className="empty-state small">Relevant source matches will appear here after a reply.</p>
+            ) : (
+              <div className="list-stack">
+                {sources.map((source) => (
+                  <Link key={source.id} to={`/deepdive/${source.id}`} className="source-match">
+                    <strong>{source.title}</strong>
+                    <span>{source.source_domain || 'unknown source'}</span>
+                    <span>{source.tags || 'General'}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </aside>
+      </section>
+    </AppShell>
+  )
 }
