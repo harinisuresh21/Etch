@@ -42,14 +42,19 @@ def scrape_url(url: str) -> dict:
     source_domain = _extract_domain(url)
     normalized_url = _normalize_url(url)
 
+    # Sites known to require JS rendering - skip straight to Playwright
+    js_heavy_domains = {'msn.com', 'linkedin.com', 'twitter.com', 'x.com', 'instagram.com', 'facebook.com', 'reddit.com'}
+    skip_to_playwright = any(domain in source_domain for domain in js_heavy_domains)
+
     try:
-        # Try simple HTTP request first
-        text = scrape_with_requests(url)
-        if text and len(text.strip()) > 20:
-            print(f"[SCRAPER] Successfully scraped with requests: {len(text)} chars")
-            soup = BeautifulSoup(requests.get(url, headers=_default_headers(), timeout=10).content, "html.parser")
-            source_title = _extract_title(soup)
-            return _result(url, normalized_url, source_domain, text, source_title)
+        # Try simple HTTP request first (unless we know it's JS-heavy)
+        if not skip_to_playwright:
+            text = scrape_with_requests(url)
+            if text and len(text.strip()) > 20:
+                print(f"[SCRAPER] Successfully scraped with requests: {len(text)} chars")
+                soup = BeautifulSoup(requests.get(url, headers=_default_headers(), timeout=10).content, "html.parser")
+                source_title = _extract_title(soup)
+                return _result(url, normalized_url, source_domain, text, source_title)
 
         # Render page with a headless browser (handles JS-heavy sites like MSN)
         if PLAYWRIGHT_AVAILABLE:
@@ -58,6 +63,8 @@ def scrape_url(url: str) -> dict:
             if browser_text and len(browser_text.strip()) > 20:
                 print(f"[SCRAPER] Successfully scraped with Playwright: {len(browser_text)} chars")
                 return _result(url, normalized_url, source_domain, browser_text, browser_title)
+            else:
+                print(f"[SCRAPER] Playwright returned empty/short content for {url}")
 
         # Try to extract metadata (works even for blocked sites)
         print(f"[SCRAPER] Main content extraction failed, trying metadata extraction...")

@@ -67,6 +67,13 @@ export default function Library() {
                 <span>{link.tags || 'General'}</span>
                 <span>Open article</span>
               </div>
+              {link.categories && link.categories.length > 0 && (
+                <div className="category-tags">
+                  {link.categories.map((cat) => (
+                    <span key={cat} className="hashtag">#{cat.replace(' > ', ' ').replace(' ', '')}</span>
+                  ))}
+                </div>
+              )}
             </Link>
           ))}
         </div>

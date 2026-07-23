@@ -88,6 +88,16 @@ export default function DeepDive() {
               <p className="panel-kicker">Tags</p>
               <p>{article.tags || 'General'}</p>
             </div>
+            {article.categories && article.categories.length > 0 && (
+              <div>
+                <p className="panel-kicker">Categories</p>
+                <div className="category-tags">
+                  {article.categories.map((cat) => (
+                    <span key={cat} className="hashtag">#{cat.replace(' > ', ' ').replace(' ', '')}</span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="article-body">

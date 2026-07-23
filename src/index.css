@@ -421,6 +421,32 @@ button {
   font-size: 0.85rem;
 }
 
+.category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.hashtag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(20, 108, 77, 0.1);
+  color: #146c4d;
+  border: 1px solid rgba(20, 108, 77, 0.15);
+  text-transform: lowercase;
+}
+
+.hashtag:hover {
+  background: rgba(20, 108, 77, 0.18);
+  border-color: rgba(20, 108, 77, 0.3);
+  cursor: default;
+}
+
 .search-input {
   width: min(22rem, 100%);
 }
