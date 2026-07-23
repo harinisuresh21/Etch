@@ -1,6 +1,23 @@
+import json
 import os
 import sqlite3
 from typing import Any
+
+def _parse_categories(link: dict) -> dict:
+    """Parse JSON string categories to array."""
+    cats = link.get("categories", "[]")
+    try:
+        link["categories"] = json.loads(cats) if isinstance(cats, str) else cats
+    except json.JSONDecodeError:
+        link["categories"] = []
+    return link
+
+
+def row_to_dict(row: sqlite3.Row | None) -> dict[str, Any] | None:
+    if row is None:
+        return None
+    d = dict(row)
+    return _parse_categories(d)
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "etch.db")
 
@@ -178,7 +195,7 @@ def get_all_links(query: str | None = None) -> list[dict[str, Any]]:
     else:
         rows = cursor.execute("SELECT * FROM links ORDER BY created_at DESC").fetchall()
     conn.close()
-    return [dict(row) for row in rows]
+    return [_parse_categories(dict(row)) for row in rows]
 
 
 def get_link(link_id: int) -> dict[str, Any] | None:

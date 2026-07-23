@@ -21,7 +21,6 @@ def _extract_title(soup: BeautifulSoup) -> str:
         return og_title.get("content")
     return ""
 
-
 def _extract_domain(url: str) -> str:
     parsed = urlparse(url)
     domain = parsed.netloc.lower()
